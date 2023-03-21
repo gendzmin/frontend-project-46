@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "hello": "bin/hello.js",
+    "tests": "bin/tests.js",
     "gendiff": "bin/gendiff.js"
   },
   "dependencies": {
