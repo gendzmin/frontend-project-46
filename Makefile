@@ -10,10 +10,10 @@ unlink: #Удаление пакетов
 publish: #Публикация пакета в npm
 	npm publish --dry-run
 
-test: #Запуск линтера
+lint: #Запуск линтера
 	npx eslint .
 
-test-fix: #Запуск линтера с опцией --fix
+lint-fix: #Запуск линтера с опцией --fix
 	npx eslint . --fix
 
 code: #Запуск VS Code
