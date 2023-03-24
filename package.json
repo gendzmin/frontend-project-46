@@ -5,13 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest"
   },
   "author": "",
   "license": "ISC",
   "package-name": "git+ssh://git@github.com:gendzmin/frontend-project-46.git",
   "bin": {
-    "tests": "bin/tests.js",
     "gendiff": "bin/gendiff.js"
   },
   "dependencies": {

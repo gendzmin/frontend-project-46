@@ -30,3 +30,5 @@ test: #Запуск тестов Jest
 
 test-coverage: #Запуск теста покрытия тестами
 	npm test -- --coverage --coverageProvider=v8
+
+.PHONY: test
