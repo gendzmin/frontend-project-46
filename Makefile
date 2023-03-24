@@ -27,3 +27,6 @@ rec: #Запись аскинемы
 
 test: #Запуск тестов Jest
 	NODE_OPTIONS=--experimental-vm-modules npx jest
+
+test-coverage: #Запуск теста покрытия тестами
+	npm test -- --coverage --coverageProvider=v8
