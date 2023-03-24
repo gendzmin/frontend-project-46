@@ -1,7 +1,10 @@
 link: #Установка пакета из операционной системы
 	sudo npm link
 
-install: #Установка модулей согласно package-lock.json
+install: install-deps
+	npx simple-git-hooks
+
+install-deps:
 	npm ci
 
 unlink: #Удаление пакетов
@@ -29,6 +32,6 @@ test: #Запуск тестов Jest
 	NODE_OPTIONS=--experimental-vm-modules npx jest
 
 test-coverage: #Запуск теста покрытия тестами
-	npm test -- --coverage --coverageProvider=v8
+	NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
 
 .PHONY: test
