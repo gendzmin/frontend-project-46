@@ -40,8 +40,7 @@ const getDiff = (filepath1, filepath2) => {
       current.push(`  ${key}: ${file1[key]}`);
       return current;
     }
-    current.push(`- ${key}: ${file1[key]}`); // Если значения по ключу разные
-    current.push(`+ ${key}: ${file2[key]}`);
+    current.push(`- ${key}: ${file1[key]}\n+ ${key}: ${file2[key]}`); // Если значения по ключу разные
     return current;
   }, []);
   return makeString(result);
