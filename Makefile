@@ -24,3 +24,6 @@ restore: #Откат к последнему коммиту
 
 rec: #Запись аскинемы
 	asciinema rec
+
+test: #Запуск тестов Jest
+	NODE_OPTIONS=--experimental-vm-modules npx jest

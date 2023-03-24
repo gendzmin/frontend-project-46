@@ -11,9 +11,19 @@ const makeString = (arr) => {
   return result.join('\n');
 };
 
+const isObjectEmpty = (obj) => {
+  if (Object.keys(obj).length === 0) {
+    return true;
+  }
+  return false;
+};
+
 const getDiff = (filepath1, filepath2) => {
   const file1 = JSON.parse(readFileSync(path.resolve(filepath1)));
   const file2 = JSON.parse(readFileSync(path.resolve(filepath2)));
+  if (isObjectEmpty(file1) && isObjectEmpty(file2)) { // Пограничный случай - пустые объекты
+    return 'Files are empty!';
+  }
   const keys1 = Object.keys(file1); // Массив ключей первого файла
   const keys2 = Object.keys(file2); // Массив ключей второго файла
   const keys = _.union(keys1, keys2).sort(); // Массив ключей обоих файлов в алфавитном порядке
