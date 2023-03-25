@@ -22,3 +22,7 @@ test('get difference / yaml', () => {
     expect(getDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'))).toEqual(comparisonResult);
     expect(getDiff(getFixturePath('emptyFile1.yml'), getFixturePath('emptyFile1.yml'))).toEqual('Files are empty!');
 });
+
+test('get difference / Unknown file extension!', () => {
+    expect(() => getDiff(getFixturePath('file.js'), getFixturePath('file.js'))).toThrow(new Error('Unknown file extension!'));
+});

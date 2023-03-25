@@ -6,8 +6,8 @@ import _ from 'lodash';
 const getFileExtension = (file) => _.last(file.split('.'));
 
 const reader = (filepath) => {
-  const file = readFileSync(path.resolve(filepath));
   const extension = getFileExtension(filepath);
+  const file = readFileSync(path.resolve(filepath));
   return [file, extension];
 };
 
