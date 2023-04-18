@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable import/extensions */
 import { program } from 'commander';
-import getDiff from '../src/index.js';
+import { getDiff } from '../src/index.js';
 
 program
   .description('Compares two configuration files and shows a difference.')

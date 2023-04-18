@@ -3,6 +3,7 @@
 /* eslint-disable no-restricted-syntax */
 import _ from 'lodash';
 import { reader, parser } from './parsers.js';
+import makeStylish from './stylish.js';
 
 const isObjectEmpty = (obj) => {
   if ((obj === undefined) || (Object.keys(obj).length === 0)) {
@@ -69,7 +70,7 @@ const getEquality = (key, file1, file2) => {
   return 'none';
 };
 
-const showIdentity = (key, file1, file2) => {
+const getIdentity = (key, file1, file2) => {
   const id = {};
   id.presence = getPresence(key, file1, file2);
   id.type = getType(key, file1, file2);
@@ -77,39 +78,19 @@ const showIdentity = (key, file1, file2) => {
   return id;
 };
 
-const compareValues = (key, file1, file2, acc) => {
+const compareValues = (format, key, file1, file2, acc) => {
   const currentIndent = createIndent(acc);
-  const id = showIdentity(key, file1, file2);
-  const result = [];
-  if (id.presence === 'first') {
-    result.push(`${currentIndent}- ${key}: ${stringer(file1, key, acc)}`);
-    return result.join('');
+  const id = getIdentity(key, file1, file2);
+  if (format === 'stylish') {
+    return makeStylish(id, currentIndent, key, file1, file2, acc);
   }
-  if (id.presence === 'second') {
-    result.push(`${currentIndent}+ ${key}: ${stringer(file2, key, acc)}`);
-    return result.join('');
-  }
-  if (id.equality === 'equal') {
-    result.push(`${currentIndent}  ${key}: ${stringer(file1, key, acc)}`);
-    return result.join('');
-  }
-  if (id.type === 'bothobj') {
-    result.push(`${currentIndent}  ${key}: ${iterateValue('stylish', file1[key], file2[key], acc + 4)}`);
-    return result.join('');
-  }
-  if (id.type !== 'bothobj') {
-    result.push(`${currentIndent}- ${key}: ${stringer(file1, key, acc)}\n${currentIndent}+ ${key}: ${stringer(file2, key, acc)}`);
-    return result.join('');
-  }
+  throw new Error('Wrong format!');
 };
 
 const iterateValue = (format, obj1, obj2, acc) => {
   const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
-  if (format === 'stylish' || format.format === 'stylish') {
-    const result = keys.map((key) => `${compareValues(key, obj1, obj2, acc)}`);
-    return `{\n${result.join('\n')}\n${createIndent(acc - 2)}}`;
-  }
-  return `${format} is wrong format`;
+  const result = keys.map((key) => `${compareValues(format, key, obj1, obj2, acc)}`);
+  return `{\n${result.join('\n')}\n${createIndent(acc - 2)}}`;
 };
 
 const getDiff = (filepath1, filepath2, format) => {
@@ -124,4 +105,4 @@ const getDiff = (filepath1, filepath2, format) => {
   return result;
 };
 
-export default getDiff;
+export { iterateValue, stringer, getDiff };
