@@ -50,15 +50,9 @@ const getPresence = (key, file1, file2) => {
 };
 const getType = (key, file1, file2) => {
   if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-    return 'bothobj';
+    return 'both-obj';
   }
-  if (_.isObject(file1[key])) {
-    return 'firstobj';
-  }
-  if (_.isObject(file2[key])) {
-    return 'secondobj';
-  }
-  return 'no-obj';
+  return 'not-both-obj';
 };
 const getEquality = (key, file1, file2) => {
   if (getPresence(key, file1, file2) === 'both') {
