@@ -5,16 +5,16 @@ import _ from 'lodash';
 import { reader, parser } from './parsers.js';
 import makeStylish from './stylish.js';
 
-const isObjectEmpty = (obj) => {
+const isObjectEmpty = (obj) => { // Проверка объекта
   if ((obj === undefined) || (Object.keys(obj).length === 0)) {
     return true;
   }
   return false;
 };
 
-const createIndent = (acc) => ' '.repeat(acc);
+const createIndent = (acc) => ' '.repeat(acc); // Создание отступа
 
-const stringifyValue = (value, acc) => {
+const stringifyValue = (value, acc) => { // Функция, приводящая объекты к строке в нужном формате (без кавычек, с крупными отступами)
   const iterator = (element, i) => {
     if (!_.isObject(element)) {
       return `${element}`;
@@ -33,13 +33,13 @@ const stringifyValue = (value, acc) => {
   };
   return `{\n${iterator(value, acc)}\n${createIndent(acc - 2)}}`;
 };
-const stringer = (object, key, acc) => {
+const stringer = (object, key, acc) => { // Функция, возвращающая значение объекта по ключу или в прямом виде (если это примитивный тип данных), или с помощью функции stringifyValue (если это объект)
   if (_.isObject(object[key])) {
     return stringifyValue(object[key], acc + 4);
   }
   return object[key];
 };
-const getPresence = (key, file1, file2) => {
+const getPresence = (key, file1, file2) => { // Функция, отображающая, в скольких объектах из двух есть значение по заданному ключу
   if (_.has(file1, key) && _.has(file2, key)) {
     return 'both';
   }
@@ -48,13 +48,13 @@ const getPresence = (key, file1, file2) => {
   }
   return 'second';
 };
-const getType = (key, file1, file2) => {
+const getType = (key, file1, file2) => { // Функция, отображающая, являются ли объектами значения в данных объектах по данному ключу
   if (_.isObject(file1[key]) && _.isObject(file2[key])) {
     return 'both-obj';
   }
   return 'not-both-obj';
 };
-const getEquality = (key, file1, file2) => {
+const getEquality = (key, file1, file2) => { // Функция, отображающая, равны ли значения у объектов по данному ключу
   if (getPresence(key, file1, file2) === 'both') {
     if (_.isEqual(file1[key], file2[key])) {
       return 'equal';
@@ -64,7 +64,7 @@ const getEquality = (key, file1, file2) => {
   return 'none';
 };
 
-const getIdentity = (key, file1, file2) => {
+const getIdentity = (key, file1, file2) => { // Функция, собирающая в одну переменную значения трёх предыдующих функций
   const id = {};
   id.presence = getPresence(key, file1, file2);
   id.type = getType(key, file1, file2);
@@ -72,7 +72,7 @@ const getIdentity = (key, file1, file2) => {
   return id;
 };
 
-const compareValues = (format, key, file1, file2, acc) => {
+const compareValues = (format, key, file1, file2, acc) => { // Функция, вызывающая форматтер с использованием данных о сравнении двух объектов из функции getIdentity
   const currentIndent = createIndent(acc);
   const id = getIdentity(key, file1, file2);
   if (format === 'stylish') {
@@ -81,7 +81,7 @@ const compareValues = (format, key, file1, file2, acc) => {
   throw new Error('Wrong format!');
 };
 
-const iterateValue = (format, obj1, obj2, acc) => {
+const iterateValue = (format, obj1, obj2, acc) => { // Функция-итератор, запускающая сравнение
   const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
   const result = keys.map((key) => `${compareValues(format, key, obj1, obj2, acc)}`);
   return `{\n${result.join('\n')}\n${createIndent(acc - 2)}}`;
