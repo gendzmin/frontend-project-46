@@ -22,8 +22,8 @@ lint-fix: #Запуск линтера с опцией --fix
 code: #Запуск VS Code
 	code .
 
-restore: #Откат к последнему коммиту
-	git reset --hard HEAD
+clean: #Откат к последнему коммиту
+	git clean -f
 
 rec: #Запись аскинемы
 	asciinema rec

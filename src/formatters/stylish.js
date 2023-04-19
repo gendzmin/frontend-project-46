@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { iterateValue, stringer } from './index.js';
+import { iterateValue, stringer } from '../index.js';
 
 const makeStylish = (id, currentIndent, key, file1, file2, acc) => {
   let result;

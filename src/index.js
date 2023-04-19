@@ -3,7 +3,7 @@
 /* eslint-disable no-restricted-syntax */
 import _ from 'lodash';
 import { reader, parser } from './parsers.js';
-import makeStylish from './stylish.js';
+import makeStylish from './formatters/stylish.js';
 
 const isObjectEmpty = (obj) => { // Проверка объекта
   if ((obj === undefined) || (Object.keys(obj).length === 0)) {
