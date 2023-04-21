@@ -1,8 +1,5 @@
-/* eslint-disable import/extensions */
-/* eslint-disable max-len */
-/* eslint-disable no-restricted-syntax */
-import { reader, parser } from './parsers.js';
-import { iterateValue } from './tree.js';
+import { reader, parser } from './parsers';
+import iterateValue from './tree';
 
 const isObjectEmpty = (obj) => { // Проверка объекта
   if ((obj === undefined) || (Object.keys(obj).length === 0)) {
@@ -19,8 +16,10 @@ const getDiff = (filepath1, filepath2, format) => {
   if (isObjectEmpty(file1) && isObjectEmpty(file2)) { // Пограничный случай - пустые объекты
     return 'Files are empty!';
   }
-  const result = iterateValue(format, file1, file2, 2);
-  return result;
+  if (format === 'stylish') {
+    return iterateValue(format, file1, file2, 2);
+  }
+  return iterateValue(format, file1, file2);
 };
 
 export default getDiff;
