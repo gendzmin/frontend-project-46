@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import makePlain from './plain';
 import makeStylish from './stylish';
 

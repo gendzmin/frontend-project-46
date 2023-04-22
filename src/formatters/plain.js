@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import _ from 'lodash';
 import iterateValue from '../tree';
 
