@@ -1,5 +1,5 @@
 import { reader, parser } from './parsers';
-import iterateValue from './tree';
+import makeOutput from './tree';
 
 const isObjectEmpty = (obj) => { // Проверка объекта
   if ((obj === undefined) || (Object.keys(obj).length === 0)) {
@@ -16,10 +16,7 @@ const getDiff = (filepath1, filepath2, format) => {
   if (isObjectEmpty(file1) && isObjectEmpty(file2)) { // Пограничный случай - пустые объекты
     return 'Files are empty!';
   }
-  if (format === 'stylish') {
-    return iterateValue(format, file1, file2, 2);
-  }
-  return iterateValue(format, file1, file2);
+  return makeOutput(file1, file2, format);
 };
 
 export default getDiff;

@@ -1,15 +1,12 @@
-/* eslint-disable import/no-cycle */
 import makePlain from './plain';
 import makeStylish from './stylish';
 
-const chooseFormatter = (format, id, key, file1, file2, acc) => {
+const chooseFormatter = (tree, format) => {
   if (format === 'stylish') {
-    const indent = acc;
-    return makeStylish(id, key, file1, file2, indent);
+    return makeStylish(tree);
   }
   if (format === 'plain') {
-    const path = `${acc}`;
-    return makePlain(id, key, file1, file2, path);
+    return makePlain(tree);
   }
   throw new Error('Wrong format!');
 };
