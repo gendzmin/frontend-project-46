@@ -1,7 +1,7 @@
 
 ### Description
 
-This is **`Difference generator`** - a program that determines the difference between two configuration files and provides it to the user in different formats.
+This is **`Difference generator`** - a program that determines the difference between two configuration files and provides it to the user in chosen format.
 
 ### Requirements
 
@@ -16,6 +16,7 @@ This is **`Difference generator`** - a program that determines the difference be
 ### Settings
 
 Default output format is **`stylish`**
+</br>
 For another output format, use the flag *-f* or *--format* with values **`plain`** or **`json`**.
 
 ### Installation
@@ -26,6 +27,7 @@ For another output format, use the flag *-f* or *--format* with values **`plain`
 
 ## Usage
 
+***
 ```
 gendiff [-h] [-V] [-f] <filepath1> <filepath2>
 
@@ -34,6 +36,7 @@ gendiff [-h] [-V] [-f] <filepath1> <filepath2>
         -V, --version        output the version number
         -f, --format         output format (default: "stylish")
 ```
+***
 
 ### Hexlet tests and linter status:
 
