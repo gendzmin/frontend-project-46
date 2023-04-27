@@ -59,7 +59,7 @@ const buildTree = (file1, file2) => {
   const tree = keys.map((key) => {
     const type = getType(getIdentity(key, file1, file2));
     const value = (type === 'both-complex') ? buildTree(file1[key], file2[key]) : getValue(type, key, file1, file2);
-    return { key, type, value };
+    return { key, value, type };
   });
   return tree;
 };
