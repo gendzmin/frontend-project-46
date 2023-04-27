@@ -1,6 +1,7 @@
-import makePlain from './plain';
-import makeStylish from './stylish';
-import makeJSON from './json';
+/* eslint-disable import/extensions */
+import makePlain from './plain.js';
+import makeStylish from './stylish.js';
+import makeJSON from './json.js';
 
 const chooseFormatter = (tree, format) => {
   if (format === 'stylish') {

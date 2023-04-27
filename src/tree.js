@@ -1,23 +1,24 @@
+/* eslint-disable import/extensions */
 /* eslint-disable max-len */
 import _ from 'lodash';
-import chooseFormatter from './formatters/index';
+import chooseFormatter from './formatters/index.js';
 
-const getPresence = (key, file1, file2) => { // Функция, отображающая, в скольких объектах из двух есть значение по заданному ключу
+const getPresence = (key, file1, file2) => { // Функция, отображающая, в скольких объектах из двух есть значение по указанному ключу
   if (_.has(file1, key) && _.has(file2, key)) {
     return 'both';
   }
   if (_.has(file1, key)) {
-    return 'first';
+    return 'first-only';
   }
-  return 'second';
+  return 'second-only';
 };
-const getData = (key, file1, file2) => { // Функция, отображающая, являются ли объектами значения в данных объектах по данному ключу
+const getData = (key, file1, file2) => { // Функция, отображающая тип данных в указанных объектах по указанных ключу
   if (_.isObject(file1[key]) && _.isObject(file2[key])) {
     return 'both-complex';
   }
   return 'not-both-complex';
 };
-const getEquality = (key, file1, file2) => { // Функция, отображающая, равны ли значения у объектов по данному ключу
+const getEquality = (key, file1, file2) => { // Функция, отображающая, равны ли значения у объектов по указанному ключу
   if (getPresence(key, file1, file2) === 'both') {
     if (_.isEqual(file1[key], file2[key])) {
       return 'equal';
@@ -33,23 +34,23 @@ const getIdentity = (key, file1, file2) => { // Функция, собирающ
   id.equality = getEquality(key, file1, file2);
   return id;
 };
-const getType = (id) => {
-  const line = [];
-  if (id.presence === 'first') {
-    line.push('first-only');
-  } else if (id.presence === 'second') {
-    line.push('second-only');
-  } else if (id.equality === 'equal') {
-    line.push('equal');
-  } else if (id.data === 'both-complex') {
-    line.push('both-complex');
-  } else if (id.data === 'not-both-complex') {
-    line.push('not-both-complex');
+const getType = (id) => { // Функция, отображающая тип разницы между значениями по указанному ключу
+  if (id.presence === 'first-only') {
+    return id.presence;
   }
-  return line.join();
+  if (id.presence === 'second-only') {
+    return id.presence;
+  }
+  if (id.equality === 'equal') {
+    return id.equality;
+  }
+  if (id.data === 'both-complex') {
+    return id.data;
+  }
+  return 'not-both-complex';
 };
 
-const createValue = (type, key, file1, file2) => {
+const getValue = (type, key, file1, file2) => { // Функция, возвращающая значение по указанному ключу в нужном виде
   if (type === 'first-only' || type === 'equal') {
     return file1[key];
   }
@@ -63,15 +64,15 @@ const buildTree = (file1, file2) => {
   const keys = _.union(Object.keys(file1), Object.keys(file2)).sort();
   const tree = keys.map((key) => {
     const type = getType(getIdentity(key, file1, file2));
-    const value = (type === 'both-complex') ? buildTree(file1[key], file2[key]) : createValue(type, key, file1, file2);
+    const value = (type === 'both-complex') ? buildTree(file1[key], file2[key]) : getValue(type, key, file1, file2);
     return { key, type, value };
   });
   return tree;
 };
 
-const makeOutput = (file1, file2, format = 'stylish') => {
+const createFormattedOutput = (file1, file2, format) => {
   const tree = buildTree(file1, file2);
   return chooseFormatter(tree, format);
 };
 
-export default makeOutput;
+export default createFormattedOutput;

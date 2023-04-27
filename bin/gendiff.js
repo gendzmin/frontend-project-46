@@ -1,16 +1,18 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
 import { program } from 'commander';
-import getDiff from '../src/index.js';
+import genDiff from '../src/index.js';
 
 program
+  .name('gendiff')
   .description('Compares two configuration files and shows a difference.')
-  .version('0.1', '-V, --version', 'output the version number')
+  .version('1.0.0', '-V, --version', 'output the version number')
+  .helpOption('-h, --help', 'output usage information')
+  .option('-f, --format <type>', 'output format', 'stylish')
   .argument('filepath1')
   .argument('filepath2')
-  .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, format) => {
-    // eslint-disable-next-line no-console
-    console.log(getDiff(filepath1, filepath2, format));
+    console.log(genDiff(filepath1, filepath2, format));
   });
 program.parse();
