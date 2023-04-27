@@ -1,7 +1,7 @@
 
 ### Description
 
-This is **Difference generator** - a program that determines the difference between two configuration files and provides it to the user in different formats.
+This is **`Difference generator`** - a program that determines the difference between two configuration files and provides it to the user in different formats.
 
 ### Requirements
 
@@ -10,23 +10,22 @@ This is **Difference generator** - a program that determines the difference betw
 
 ### Features
 
-* Accepts different configuration file extensions: **.json** / **.yaml** / **.yml**
-* Outputs comparison result in different formats: **stylish** / **plain** / **json**
+* Accepts different configuration file extensions: **`.json`** / **`.yaml`** / **`.yml`**
+* Outputs comparison result in different formats: **`stylish`** / **`plain`** / **`json`**
 
 ### Settings
 
-Default output format is **stylish**
-For another output format, use the flag *-f* or *--format* with values **plain** or **json**.
+Default output format is **`stylish`**
+For another output format, use the flag *-f* or *--format* with values **`plain`** or **`json`**.
 
 ### Installation
 
 1. Clone this repository to create a local copy on your computer;  
 2. Open your local repository;  
-3. Use **npm install** and **sudo npm link** commands.
+3. Use **`npm install`** and **`sudo npm link`** commands.
 
 ## Usage
 
-***
 ```
 gendiff [-h] [-V] [-f] <filepath1> <filepath2>
 
@@ -35,7 +34,6 @@ gendiff [-h] [-V] [-f] <filepath1> <filepath2>
         -V, --version        output the version number
         -f, --format         output format (default: "stylish")
 ```
-***
 
 ### Hexlet tests and linter status:
 
