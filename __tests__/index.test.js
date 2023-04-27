@@ -20,17 +20,17 @@ const resultNestedJSON = '[{"key":"common","value":[{"key":"follow","value":fals
 
 test('genDiff / simple / stylish', () => {
     expect(genDiff(getFixturePath('simpleFile1.json'), getFixturePath('simpleFile2.json'), 'stylish')).toEqual(resultSimpleStylish);
-    expect(genDiff(getFixturePath('simpleFile1.yml'), getFixturePath('simpleFile2.yml'), 'stylish')).toEqual(resultSimpleStylish);
+    expect(genDiff(getFixturePath('simpleFile1.yaml'), getFixturePath('simpleFile2.yml'), 'stylish')).toEqual(resultSimpleStylish);
 });
 
 test('genDiff / simple / plain', () => {
     expect(genDiff(getFixturePath('simpleFile1.json'), getFixturePath('simpleFile2.json'), 'plain')).toEqual(resultSimplePlain);
-    expect(genDiff(getFixturePath('simpleFile1.yml'), getFixturePath('simpleFile2.yml'), 'plain')).toEqual(resultSimplePlain);
+    expect(genDiff(getFixturePath('simpleFile1.yaml'), getFixturePath('simpleFile2.yml'), 'plain')).toEqual(resultSimplePlain);
 });
 
 test('genDiff / simple / json', () => {
     expect(genDiff(getFixturePath('simpleFile1.json'), getFixturePath('simpleFile2.json'), 'json')).toEqual(resultSimpleJSON);
-    expect(genDiff(getFixturePath('simpleFile1.yml'), getFixturePath('simpleFile2.yml'), 'json')).toEqual(resultSimpleJSON);
+    expect(genDiff(getFixturePath('simpleFile1.yaml'), getFixturePath('simpleFile2.yml'), 'json')).toEqual(resultSimpleJSON);
 });
 
 test('genDiff / nested / stylish', () => {
@@ -39,12 +39,12 @@ test('genDiff / nested / stylish', () => {
 
 test('genDiff / nested / plain', () => {
     expect(genDiff(getFixturePath('nestedFile1.json'), getFixturePath('nestedFile2.json'), 'plain')).toEqual(resultNestedPlain);
-    expect(genDiff(getFixturePath('nestedFile1.yml'), getFixturePath('nestedFile2.yml'), 'plain')).toEqual(resultNestedPlain);
+    expect(genDiff(getFixturePath('nestedFile1.yaml'), getFixturePath('nestedFile2.yml'), 'plain')).toEqual(resultNestedPlain);
 });
 
 test('genDiff / nested / json', () => {
     expect(genDiff(getFixturePath('nestedFile1.json'), getFixturePath('nestedFile2.json'), 'json')).toEqual(resultNestedJSON);
-    expect(genDiff(getFixturePath('nestedFile1.yml'), getFixturePath('nestedFile2.yml'), 'json')).toEqual(resultNestedJSON);
+    expect(genDiff(getFixturePath('nestedFile1.yaml'), getFixturePath('nestedFile2.yml'), 'json')).toEqual(resultNestedJSON);
 });
 
 test('genDiff / Error / Unknown file extension!', () => {
