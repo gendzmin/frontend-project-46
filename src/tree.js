@@ -35,19 +35,13 @@ const getIdentity = (key, file1, file2) => { // Функция, собирающ
   return id;
 };
 const getType = (id) => { // Функция, отображающая тип разницы между значениями по указанному ключу
-  if (id.presence === 'first-only') {
-    return id.presence;
-  }
-  if (id.presence === 'second-only') {
+  if (id.presence.includes('only')) {
     return id.presence;
   }
   if (id.equality === 'equal') {
     return id.equality;
   }
-  if (id.data === 'both-complex') {
-    return id.data;
-  }
-  return 'not-both-complex';
+  return id.data;
 };
 
 const getValue = (type, key, file1, file2) => { // Функция, возвращающая значение по указанному ключу в нужном виде
