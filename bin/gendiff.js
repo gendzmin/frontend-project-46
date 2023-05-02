@@ -2,16 +2,14 @@
 /* eslint-disable no-console */
 /* eslint-disable import/extensions */
 import { program } from 'commander';
-import genDiff from '../src/index.js';
+import genDiff from '../index.js';
 
 program
   .name('gendiff')
   .description('Compares two configuration files and shows a difference.')
-  .helpOption('-h, --help', 'output usage information')
   .version('1.0.0', '-V, --version', 'output the version number')
   .option('-f, --format <type>', 'output format', 'stylish')
-  .argument('filepath1')
-  .argument('filepath2')
+  .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
     const formatType = program.opts().format;
     console.log(genDiff(filepath1, filepath2, formatType));
