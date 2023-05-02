@@ -55,8 +55,10 @@ const buildTree = (file1, file2) => {
   const keys = _.sortBy(_.union(Object.keys(file1), Object.keys(file2)));
   const tree = keys.map((key) => {
     const type = getType(getIdentity(key, file1, file2));
-    const value = (type === 'both-complex') ? buildTree(file1[key], file2[key]) : getValue(type, key, file1, file2);
-    return { key, value, type };
+    if (type === 'both-complex') {
+      return { key, children: buildTree(file1[key], file2[key]), type };
+    }
+    return { key, value: getValue(type, key, file1, file2), type };
   });
   return tree;
 };

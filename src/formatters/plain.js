@@ -23,7 +23,7 @@ const makePlain = (tree, path = '') => {
       case 'equal':
         return 'Placeholder to be deleted';
       case 'both-complex':
-        return `${makePlain(node.value, currentPath)}`;
+        return `${makePlain(node.children, currentPath)}`;
       default:
         return `Property '${currentPath}' was updated. From ${getValue(node.value.first)} to ${getValue(node.value.second)}`;
     }

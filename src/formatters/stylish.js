@@ -35,7 +35,7 @@ const makeStylish = (tree, indent = 2) => {
       case 'equal':
         return `${currentIndent}  ${node.key}: ${getValue(node.value, indent)}`;
       case 'both-complex':
-        return `${currentIndent}  ${node.key}: ${makeStylish(node.value, indent + 4)}`;
+        return `${currentIndent}  ${node.key}: ${makeStylish(node.children, indent + 4)}`;
       default:
         return `${currentIndent}- ${node.key}: ${getValue(node.value.first, indent)}\n${currentIndent}+ ${node.key}: ${getValue(node.value.second, indent)}`;
     }
