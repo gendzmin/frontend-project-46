@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
-import { reader, parser } from './parsers.js';
+import parseData from './parsers.js';
+import readData from './utils.js';
 import createFormattedOutput from './tree.js';
 
 const isObjectEmpty = (obj) => { // Проверка объекта
@@ -10,10 +11,10 @@ const isObjectEmpty = (obj) => { // Проверка объекта
 };
 
 const genDiff = (filepath1, filepath2, format) => {
-  const [readFile1, extension1] = reader(filepath1);
-  const [readFile2, extension2] = reader(filepath2);
-  const file1 = parser(readFile1, extension1);
-  const file2 = parser(readFile2, extension2);
+  const [readFile1, extension1] = readData(filepath1);
+  const [readFile2, extension2] = readData(filepath2);
+  const file1 = parseData(readFile1, extension1);
+  const file2 = parseData(readFile2, extension2);
   if (isObjectEmpty(file1) && isObjectEmpty(file2)) { // Пограничный случай - пустые объекты
     throw new Error('Files are empty!');
   }

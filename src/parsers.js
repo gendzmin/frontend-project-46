@@ -1,26 +1,15 @@
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
 import yaml from 'js-yaml';
-import _ from 'lodash';
 
-const getFileExtension = (file) => _.last(file.split('.'));
-
-const reader = (filepath) => {
-  const extension = getFileExtension(filepath);
-  const file = readFileSync(path.resolve(filepath));
-  return [file, extension];
-};
-
-const parser = (file, extension) => {
+const parseData = (rawData, extension) => {
   switch (extension) {
-    case 'json':
-      return JSON.parse(file);
-    case 'yaml':
-    case 'yml':
-      return yaml.load(file);
+    case '.json':
+      return JSON.parse(rawData);
+    case '.yaml':
+    case '.yml':
+      return yaml.load(rawData);
     default:
       throw new Error('Unknown file extension!');
   }
 };
 
-export { reader, parser };
+export default parseData;
