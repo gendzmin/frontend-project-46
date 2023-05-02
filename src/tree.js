@@ -28,10 +28,7 @@ const getEquality = (key, file1, file2) => { // Функция, отобража
   return 'none';
 };
 const getIdentity = (key, file1, file2) => { // Функция, собирающая в одну переменную значения трёх предыдующих функций
-  const id = {};
-  id.presence = getPresence(key, file1, file2);
-  id.data = getData(key, file1, file2);
-  id.equality = getEquality(key, file1, file2);
+  const id = { presence: getPresence(key, file1, file2), data: getData(key, file1, file2), equality: getEquality(key, file1, file2) };
   return id;
 };
 const getType = (id) => { // Функция, отображающая тип разницы между значениями по указанному ключу
