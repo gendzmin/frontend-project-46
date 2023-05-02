@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/gendzmin/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/gendzmin/frontend-project-46/actions)",
+  "description": "A program that determines the difference between two configuration files",
   "main": "index.js",
   "type": "module",
   "scripts": {
