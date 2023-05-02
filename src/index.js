@@ -10,7 +10,7 @@ const isObjectEmpty = (obj) => { // Проверка объекта
   return false;
 };
 
-const genDiff = (filepath1, filepath2, format) => {
+const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const [readFile1, extension1] = readData(filepath1);
   const [readFile2, extension2] = readData(filepath2);
   const file1 = parseData(readFile1, extension1);
