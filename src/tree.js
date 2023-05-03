@@ -3,42 +3,20 @@
 import _ from 'lodash';
 import chooseFormatter from './formatters/index.js';
 
-const getPresence = (key, file1, file2) => { // Функция, отображающая, в скольких объектах из двух есть значение по указанному ключу
-  if (_.has(file1, key) && _.has(file2, key)) {
-    return 'both';
-  }
-  if (_.has(file1, key)) {
+const getType = (key, file1, file2) => { // Функция, отображающая тип разницы между значениями по указанному ключу
+  if (_.has(file1, key) && !_.has(file2, key)) {
     return 'first-only';
   }
-  return 'second-only';
-};
-const getData = (key, file1, file2) => { // Функция, отображающая тип данных в указанных объектах по указанных ключу
+  if (!_.has(file1, key) && _.has(file2, key)) {
+    return 'second-only';
+  }
+  if (_.isEqual(file1[key], file2[key])) {
+    return 'equal';
+  }
   if (_.isObject(file1[key]) && _.isObject(file2[key])) {
     return 'both-complex';
   }
   return 'not-both-complex';
-};
-const getEquality = (key, file1, file2) => { // Функция, отображающая, равны ли значения у объектов по указанному ключу
-  if (getPresence(key, file1, file2) === 'both') {
-    if (_.isEqual(file1[key], file2[key])) {
-      return 'equal';
-    }
-    return 'diff';
-  }
-  return 'none';
-};
-const getIdentity = (key, file1, file2) => { // Функция, собирающая в одну переменную значения трёх предыдующих функций
-  const id = { presence: getPresence(key, file1, file2), data: getData(key, file1, file2), equality: getEquality(key, file1, file2) };
-  return id;
-};
-const getType = (id) => { // Функция, отображающая тип разницы между значениями по указанному ключу
-  if (id.presence.includes('only')) {
-    return id.presence;
-  }
-  if (id.equality === 'equal') {
-    return id.equality;
-  }
-  return id.data;
 };
 
 const getValue = (type, key, file1, file2) => { // Функция, возвращающая значение по указанному ключу в нужном виде
@@ -54,7 +32,7 @@ const getValue = (type, key, file1, file2) => { // Функция, возвра�
 const buildTree = (file1, file2) => {
   const keys = _.sortBy(_.union(Object.keys(file1), Object.keys(file2)));
   const tree = keys.map((key) => {
-    const type = getType(getIdentity(key, file1, file2));
+    const type = getType(key, file1, file2);
     if (type === 'both-complex') {
       return { key, children: buildTree(file1[key], file2[key]), type };
     }
