@@ -2,12 +2,7 @@ import parseData from './parsers.js';
 import readData from './utils.js';
 import createFormattedOutput from './tree.js';
 
-const isObjectEmpty = (obj) => {
-  if (Object.keys(obj).length === 0) {
-    return true;
-  }
-  return false;
-};
+const isObjectEmpty = (obj) => Object.keys(obj).length === 0;
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const [readFile1, extension1] = readData(filepath1);

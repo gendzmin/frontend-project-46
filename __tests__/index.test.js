@@ -1,9 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["__filename", "__dirname"] }] */
-import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'node:path';
 import { test, expect } from '@jest/globals';
 import genDiff from '../src/index.js';
+import readData from '../src/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,7 +11,7 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 
 const getData = (dataName) => {
   const dataPath = getFixturePath(dataName);
-  const data = fs.readFileSync(path.resolve(dataPath), 'utf-8');
+  const [data] = readData(dataPath);
   return data;
 };
 
@@ -37,6 +37,6 @@ test.each(dataSet)('[TEST] Nested data', (data1, data2) => {
 
 test('[TEST] Errors', () => {
   expect(() => genDiff(emptyFile, emptyFile)).toThrow(new Error('Files are empty!'));
-  expect(() => genDiff(jsFile, jsFile)).toThrow(new Error('Unknown file extension!'));
+  expect(() => genDiff(jsFile, jsFile)).toThrow(new Error('Unknown extension!'));
   expect(() => genDiff(jsonFile1, jsonFile2, 'stuff')).toThrow(new Error('Wrong format!'));
 });
