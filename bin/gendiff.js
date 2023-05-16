@@ -10,7 +10,6 @@ program
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
     const formatType = program.opts().format;
-    // eslint-disable-next-line no-console
     console.log(genDiff(filepath1, filepath2, formatType));
   });
 program.parse();
