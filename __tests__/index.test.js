@@ -1,7 +1,4 @@
-/* eslint-disable max-len */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable indent */
-/* eslint-disable import/extensions */
+/* eslint no-underscore-dangle: ["error", { "allow": ["__filename", "__dirname"] }] */
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'node:path';

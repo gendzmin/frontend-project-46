@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import _ from 'lodash';
 
-const createIndent = (acc) => ' '.repeat(acc); // Создание отступа
+const createIndent = (acc) => ' '.repeat(acc);
 
-const stringifyValue = (value, indent) => { // Функция, приводящая объекты к строке в нужном формате (без кавычек, с крупными отступами)
+const stringifyValue = (value, indent) => {
   const iterator = (element, i) => {
     if (!_.isObject(element)) {
       return `${element}`;

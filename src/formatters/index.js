@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import makePlain from './plain.js';
 import makeStylish from './stylish.js';
 import makeJSON from './json.js';

@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable max-len */
 import _ from 'lodash';
 import chooseFormatter from './formatters/index.js';
 
