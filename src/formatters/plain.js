@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
@@ -10,7 +10,7 @@ const getValue = (value) => {
   return value;
 };
 
-const getPath = (path, key) => (path === '' ? `${key}` : `${path}.${key}`);
+const getPath = (path, key) => [path, key].filter(Boolean).join('.');
 
 const makePlain = (tree, path = '') => {
   const lines = tree.map((node) => {
@@ -19,13 +19,13 @@ const makePlain = (tree, path = '') => {
       case 'deleted':
         return `Property '${currentPath}' was removed`;
       case 'added':
-        return `Property '${currentPath}' was added with value: ${getValue(node.value)}`;
+        return `Property '${currentPath}' was added with value: ${stringify(node.value)}`;
       case 'unchanged':
         return null;
       case 'nested':
         return `${makePlain(node.children, currentPath)}`;
       default:
-        return `Property '${currentPath}' was updated. From ${getValue(node.value[0])} to ${getValue(node.value[1])}`;
+        return `Property '${currentPath}' was updated. From ${stringify(node.value[0])} to ${stringify(node.value[1])}`;
     }
   });
   const filtered = _.without(lines, null);

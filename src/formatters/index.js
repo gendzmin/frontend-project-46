@@ -3,16 +3,16 @@ import makeStylish from './stylish.js';
 import makeJSON from './json.js';
 
 const chooseFormatter = (tree, format) => {
-  if (format === 'stylish') {
-    return makeStylish(tree);
+  switch (format) {
+    case 'stylish':
+      return makeStylish(tree);
+    case 'plain':
+      return makePlain(tree);
+    case 'json':
+      return makeJSON(tree);
+    default:
+      throw new Error('Wrong format!');
   }
-  if (format === 'plain') {
-    return makePlain(tree);
-  }
-  if (format === 'json') {
-    return makeJSON(tree);
-  }
-  throw new Error('Wrong format!');
 };
 
 export default chooseFormatter;

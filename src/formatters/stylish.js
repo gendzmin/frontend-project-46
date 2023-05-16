@@ -24,23 +24,23 @@ const stringifyValue = (value, indent) => {
 };
 const getValue = (value, acc) => (_.isObject(value) ? stringifyValue(value, acc + 4) : value);
 
-const makeStylish = (tree, indent = 2) => {
-  const currentIndent = createIndent(indent);
+const makeStylish = (tree, depth = 2) => {
+  const currentIndent = createIndent(depth);
   const lines = tree.map((node) => {
     switch (node.type) {
       case 'deleted':
-        return `${currentIndent}- ${node.key}: ${getValue(node.value, indent)}`;
+        return `${currentIndent}- ${node.key}: ${getValue(node.value, depth)}`;
       case 'added':
-        return `${currentIndent}+ ${node.key}: ${getValue(node.value, indent)}`;
+        return `${currentIndent}+ ${node.key}: ${getValue(node.value, depth)}`;
       case 'unchanged':
-        return `${currentIndent}  ${node.key}: ${getValue(node.value, indent)}`;
+        return `${currentIndent}  ${node.key}: ${getValue(node.value, depth)}`;
       case 'nested':
-        return `${currentIndent}  ${node.key}: ${makeStylish(node.children, indent + 4)}`;
+        return `${currentIndent}  ${node.key}: ${makeStylish(node.children, depth + 4)}`;
       default:
-        return `${currentIndent}- ${node.key}: ${getValue(node.value[0], indent)}\n${currentIndent}+ ${node.key}: ${getValue(node.value[1], indent)}`;
+        return `${currentIndent}- ${node.key}: ${getValue(node.value[0], depth)}\n${currentIndent}+ ${node.key}: ${getValue(node.value[1], depth)}`;
     }
   });
-  return `{\n${lines.join('\n')}\n${createIndent(indent - 2)}}`;
+  return `{\n${lines.join('\n')}\n${createIndent(depth - 2)}}`;
 };
 
 export default makeStylish;
