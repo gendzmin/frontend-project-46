@@ -16,19 +16,19 @@ const makePlain = (tree, path = '') => {
   const lines = tree.map((node) => {
     const currentPath = getPath(path, node.key);
     switch (node.type) {
-      case 'first-only':
+      case 'deleted':
         return `Property '${currentPath}' was removed`;
-      case 'second-only':
+      case 'added':
         return `Property '${currentPath}' was added with value: ${getValue(node.value)}`;
-      case 'equal':
-        return 'Placeholder to be deleted';
-      case 'both-complex':
+      case 'unchanged':
+        return null;
+      case 'nested':
         return `${makePlain(node.children, currentPath)}`;
       default:
-        return `Property '${currentPath}' was updated. From ${getValue(node.value.first)} to ${getValue(node.value.second)}`;
+        return `Property '${currentPath}' was updated. From ${getValue(node.value[0])} to ${getValue(node.value[1])}`;
     }
   });
-  const filtered = _.without(lines, 'Placeholder to be deleted');
+  const filtered = _.without(lines, null);
   return filtered.join('\n');
 };
 

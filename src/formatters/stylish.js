@@ -28,16 +28,16 @@ const makeStylish = (tree, indent = 2) => {
   const currentIndent = createIndent(indent);
   const lines = tree.map((node) => {
     switch (node.type) {
-      case 'first-only':
+      case 'deleted':
         return `${currentIndent}- ${node.key}: ${getValue(node.value, indent)}`;
-      case 'second-only':
+      case 'added':
         return `${currentIndent}+ ${node.key}: ${getValue(node.value, indent)}`;
-      case 'equal':
+      case 'unchanged':
         return `${currentIndent}  ${node.key}: ${getValue(node.value, indent)}`;
-      case 'both-complex':
+      case 'nested':
         return `${currentIndent}  ${node.key}: ${makeStylish(node.children, indent + 4)}`;
       default:
-        return `${currentIndent}- ${node.key}: ${getValue(node.value.first, indent)}\n${currentIndent}+ ${node.key}: ${getValue(node.value.second, indent)}`;
+        return `${currentIndent}- ${node.key}: ${getValue(node.value[0], indent)}\n${currentIndent}+ ${node.key}: ${getValue(node.value[1], indent)}`;
     }
   });
   return `{\n${lines.join('\n')}\n${createIndent(indent - 2)}}`;

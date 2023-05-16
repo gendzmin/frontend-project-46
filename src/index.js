@@ -1,6 +1,7 @@
 import parseData from './parsers.js';
 import readData from './utils.js';
-import createFormattedOutput from './tree.js';
+import buildTree from './tree.js';
+import chooseFormatter from './formatters/index.js';
 
 const isObjectEmpty = (obj) => Object.keys(obj).length === 0;
 
@@ -12,7 +13,9 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
   if (isObjectEmpty(file1) && isObjectEmpty(file2)) {
     throw new Error('Files are empty!');
   }
-  return createFormattedOutput(file1, file2, format);
+  const tree = buildTree(file1, file2);
+  const formattedOutput = chooseFormatter(tree, format);
+  return formattedOutput;
 };
 
 export default genDiff;
