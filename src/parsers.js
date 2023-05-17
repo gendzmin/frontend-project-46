@@ -1,7 +1,7 @@
 import yaml from 'js-yaml';
 
-const parseData = (rawData, dataFormat) => {
-  switch (dataFormat) {
+const parseData = (rawData, parserType) => {
+  switch (parserType) {
     case 'json':
       return JSON.parse(rawData);
     case 'yaml':
