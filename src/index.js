@@ -1,9 +1,16 @@
+import path from 'node:path';
+import fs from 'fs';
 import parseData from './parsers.js';
-import readData from './utils.js';
 import buildTree from './tree.js';
 import chooseFormatter from './formatters/index.js';
 
 const isObjectEmpty = (obj) => Object.keys(obj).length === 0;
+
+const readData = (dataPath) => {
+  const rawData = fs.readFileSync(path.resolve(dataPath), 'utf-8');
+  const extension = (path.extname(dataPath)).slice(1);
+  return [rawData, extension];
+};
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const [readFile1, extension1] = readData(filepath1);

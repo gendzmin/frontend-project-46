@@ -1,9 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["__filename", "__dirname"] }] */
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'node:path';
 import { test, expect } from '@jest/globals';
 import genDiff from '../src/index.js';
-import readData from '../src/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,7 +11,7 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 
 const getData = (dataName) => {
   const dataPath = getFixturePath(dataName);
-  const [data] = readData(dataPath);
+  const data = fs.readFileSync(path.resolve(dataPath), 'utf-8');
   return data;
 };
 
