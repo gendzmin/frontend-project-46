@@ -12,16 +12,16 @@ const readData = (dataPath) => {
   return [rawData, extension];
 };
 
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
-  const [readFile1, extension1] = readData(filepath1);
-  const [readFile2, extension2] = readData(filepath2);
-  const file1 = parseData(readFile1, extension1);
-  const file2 = parseData(readFile2, extension2);
+const genDiff = (filepath1, filepath2, outputFormat = 'stylish') => {
+  const [readFile1, dataFormat1] = readData(filepath1);
+  const [readFile2, dataFormat2] = readData(filepath2);
+  const file1 = parseData(readFile1, dataFormat1);
+  const file2 = parseData(readFile2, dataFormat2);
   if (isObjectEmpty(file1) && isObjectEmpty(file2)) {
     throw new Error('Files are empty!');
   }
   const tree = buildTree(file1, file2);
-  const formattedOutput = chooseFormatter(tree, format);
+  const formattedOutput = chooseFormatter(tree, outputFormat);
   return formattedOutput;
 };
 

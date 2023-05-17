@@ -9,8 +9,8 @@ program
   .option('-f, --format <type>', 'output format', 'stylish')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
-    const formatType = program.opts().format;
+    const outputFormat = program.opts().format;
     // eslint-disable-next-line no-console
-    console.log(genDiff(filepath1, filepath2, formatType));
+    console.log(genDiff(filepath1, filepath2, outputFormat));
   });
 program.parse();

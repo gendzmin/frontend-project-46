@@ -37,6 +37,6 @@ test.each(dataSet)('[TEST] Nested data', (data1, data2) => {
 
 test('[TEST] Errors', () => {
   expect(() => genDiff(emptyFile, emptyFile)).toThrow(new Error('Files are empty!'));
-  expect(() => genDiff(jsFile, jsFile)).toThrow(new Error('Unknown extension!'));
-  expect(() => genDiff(jsonFile1, jsonFile2, 'stuff')).toThrow(new Error('Wrong format!'));
+  expect(() => genDiff(jsFile, jsFile)).toThrow(new Error('Unknown data format!'));
+  expect(() => genDiff(jsonFile1, jsonFile2, 'stuff')).toThrow(new Error('Unknown output format!'));
 });
