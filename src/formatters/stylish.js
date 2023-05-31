@@ -1,46 +1,50 @@
-/* eslint-disable max-len */
 import _ from 'lodash';
 
-const createIndent = (acc) => ' '.repeat(acc);
+const createIndent = (depth, isBracketIndent = false) => (isBracketIndent ? ' '.repeat(depth * 4) : ' '.repeat(depth * 4 - 2));
 
-const stringifyValue = (value, indent) => {
-  const iterator = (element, i) => {
+const stringify = (value, indent) => {
+  const iterator = (element, depth) => {
     if (!_.isObject(element)) {
       return `${element}`;
     }
     const keys = Object.keys(element);
     const result = keys.map((key) => {
-      const currentIndent = createIndent(i);
-      const currentKey = `${currentIndent}${key}`;
-      const currentValue = `${iterator(element[key], i + 4)}`;
+      const contentIndent = createIndent(depth);
+      const bracketIndent = createIndent(depth, true);
+      const currentKey = `${contentIndent}${key}`;
+      const currentValue = `${iterator(element[key], depth + 1)}`;
       if (_.isObject(element[key])) {
-        return `  ${currentKey}: {\n${currentValue}\n${createIndent(i + 2)}}`;
+        return `  ${currentKey}: {\n${currentValue}\n${bracketIndent}}`;
       }
       return `  ${currentKey}: ${currentValue}`;
     });
     return result.join('\n');
   };
-  return `{\n${iterator(value, indent)}\n${createIndent(indent - 2)}}`;
+  return `${iterator(value, indent)}`;
 };
-const getValue = (value, acc) => (_.isObject(value) ? stringifyValue(value, acc + 4) : value);
+const getValue = (value, depth) => (_.isObject(value) ? `{\n${stringify(value, depth + 1)}\n${createIndent(depth, true)}}` : value);
 
-const makeStylish = (tree, depth = 2) => {
-  const currentIndent = createIndent(depth);
-  const lines = tree.map((node) => {
-    switch (node.type) {
-      case 'deleted':
-        return `${currentIndent}- ${node.key}: ${getValue(node.value, depth)}`;
-      case 'added':
-        return `${currentIndent}+ ${node.key}: ${getValue(node.value, depth)}`;
-      case 'unchanged':
-        return `${currentIndent}  ${node.key}: ${getValue(node.value, depth)}`;
-      case 'nested':
-        return `${currentIndent}  ${node.key}: ${makeStylish(node.children, depth + 4)}`;
-      default:
-        return `${currentIndent}- ${node.key}: ${getValue(node.value[0], depth)}\n${currentIndent}+ ${node.key}: ${getValue(node.value[1], depth)}`;
-    }
-  });
-  return `{\n${lines.join('\n')}\n${createIndent(depth - 2)}}`;
+const makeStylish = (commonTree, commonDepth = 1) => {
+  const iter = (tree, depth = 1) => {
+    const contentIndent = createIndent(depth);
+    const bracketIndent = createIndent(depth, true);
+    const lines = tree.map((node) => {
+      switch (node.type) {
+        case 'deleted':
+          return `${contentIndent}- ${node.key}: ${getValue(node.value, depth)}`;
+        case 'added':
+          return `${contentIndent}+ ${node.key}: ${getValue(node.value, depth)}`;
+        case 'unchanged':
+          return `${contentIndent}  ${node.key}: ${getValue(node.value, depth)}`;
+        case 'nested':
+          return `${contentIndent}  ${node.key}: {\n${iter(node.children, depth + 1)}\n${bracketIndent}}`;
+        default:
+          return `${contentIndent}- ${node.key}: ${getValue(node.value[0], depth)}\n${contentIndent}+ ${node.key}: ${getValue(node.value[1], depth)}`;
+      }
+    });
+    return lines.join('\n');
+  };
+  return `{\n${iter(commonTree, commonDepth)}\n}`;
 };
 
 export default makeStylish;
