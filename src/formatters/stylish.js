@@ -16,7 +16,7 @@ const stringify = (value, indent) => {
     });
     return result.join('\n');
   };
-  return `${iterator(value, indent)}`;
+  return iterator(value, indent);
 };
 const getValue = (value, depth) => (_.isObject(value) ? `{\n${stringify(value, depth + 1)}\n${createIndent(depth, true)}}` : value);
 
