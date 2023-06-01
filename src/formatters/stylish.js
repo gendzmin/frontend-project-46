@@ -4,19 +4,15 @@ const createIndent = (depth, isBracketIndent = false) => (isBracketIndent ? ' '.
 
 const stringify = (value, indent) => {
   const iterator = (element, depth) => {
-    if (!_.isObject(element)) {
-      return `${element}`;
-    }
     const keys = Object.keys(element);
     const result = keys.map((key) => {
       const contentIndent = createIndent(depth);
       const bracketIndent = createIndent(depth, true);
       const currentKey = `${contentIndent}${key}`;
-      const currentValue = `${iterator(element[key], depth + 1)}`;
       if (_.isObject(element[key])) {
-        return `  ${currentKey}: {\n${currentValue}\n${bracketIndent}}`;
+        return `  ${currentKey}: {\n${iterator(element[key], depth + 1)}\n${bracketIndent}}`;
       }
-      return `  ${currentKey}: ${currentValue}`;
+      return `  ${currentKey}: ${element[key]}`;
     });
     return result.join('\n');
   };
