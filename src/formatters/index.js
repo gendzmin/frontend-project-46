@@ -11,7 +11,7 @@ const chooseFormatter = (tree, outputFormat) => {
     case 'json':
       return makeJSON(tree);
     default:
-      throw new Error('Unknown output format!');
+      throw new Error(`Unknown output format: '${outputFormat}'!`);
   }
 };
 
